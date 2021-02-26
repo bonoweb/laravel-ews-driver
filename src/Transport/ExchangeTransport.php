@@ -1,6 +1,6 @@
 <?php
 
-namespace Adeboyed\LaravelExchangeDriver\Transport;
+namespace Bonoweb\LaravelExchangeDriver\Transport;
 
 use Illuminate\Mail\Transport\Transport;
 use Swift_Mime_SimpleMessage;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Adeboyed\LaravelExchangeDriver;
+namespace Bonoweb\LaravelExchangeDriver;
 
 use Illuminate\Mail\MailManager;
 use Illuminate\Support\ServiceProvider;
 use \jamesiarmes\PhpEws\Enumeration\MessageDispositionType;
 
-use Adeboyed\LaravelExchangeDriver\Transport\ExchangeTransport;
+use Bonoweb\LaravelExchangeDriver\Transport\ExchangeTransport;
 
 
 class ExchangeAddedServiceProvider extends ServiceProvider

@@ -1,8 +1,8 @@
 <?php
 
-namespace Adeboyed\LaravelExchangeDriver;
+namespace Bonoweb\LaravelExchangeDriver;
 
-use Adeboyed\LaravelExchangeDriver\ExchangeAddedServiceProvider;
+use Bonoweb\LaravelExchangeDriver\ExchangeAddedServiceProvider;
 use Illuminate\Mail\MailServiceProvider;
 
 class ExchangeServiceProvider extends MailServiceProvider

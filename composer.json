@@ -24,16 +24,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Adeboyed\\LaravelSendgridDriver\\": "src/"
+            "Bonoweb\\LaravelExchangeDriver\\": "src/"
         }
     },
     "support": {
-        "issues": "https://github.com/adeboyed/laravel-ews-driver/issues"
+        "issues": "https://github.com/bonoweb/laravel-ews-driver/issues"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Adeboyed\\LaravelExchangeDriver\\ExchangeAddedServiceProvider"
+                "Bonoweb\\LaravelExchangeDriver\\ExchangeAddedServiceProvider"
             ]
         }
     }
