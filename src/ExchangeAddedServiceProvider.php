@@ -26,8 +26,9 @@ class ExchangeAddedServiceProvider extends ServiceProvider
                 $password = $config['password'];
                 $messageDispositionType = $config['messageDispositionType'] ?: MessageDispositionType::SEND_AND_SAVE_COPY;
                 $clientVersion = $config['clientVersion'];
+                $caFile = $config['caFile'];
 
-                return new ExchangeTransport($host, $username, $password, $messageDispositionType, $clientVersion );
+                return new ExchangeTransport($host, $username, $password, $messageDispositionType, $clientVersion, $caFile );
             });
         });
     }
