@@ -27,13 +27,17 @@ class ExchangeTransport extends Transport
     protected $username;
     protected $password;
     protected $messageDispositionType;
+    protected $clientVersion;
+    protected $caFile;
 
-    public function __construct($host, $username, $password, $messageDispositionType)
+    public function __construct($host, $username, $password, $messageDispositionType, $clientVersion = null, $caFile=null)
     {
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
         $this->messageDispositionType = $messageDispositionType;
+        $this->clientVersion = $clientVersion;
+        $this->caFile = $caFile;
     }
 
     public function send(Swift_Mime_SimpleMessage $simpleMessage, &$failedRecipients = null)
@@ -44,8 +48,18 @@ class ExchangeTransport extends Transport
         $client = new Client(
             $this->host,
             $this->username,
-            $this->password
+            $this->password,
+            $this->clientVersion
         );
+
+        if($this->caFile){
+            $client->setCurlOptions(
+                [
+                    CURLOPT_SSL_VERIFYHOST => $this->caFile,
+                    CURLOPT_SSL_VERIFYPEER => $this->caFile
+                ]
+            );
+        }
 
         $request = new CreateItemType();
         $request->Items = new NonEmptyArrayOfAllItemsType();
