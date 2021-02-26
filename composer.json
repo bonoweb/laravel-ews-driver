@@ -1,13 +1,17 @@
 {
-    "name": "adeboyed/laravel-ews-driver",
+    "name": "bonoweb/laravel-ews-driver",
     "description": "Adds Exchange Web Services Mail Support to Laravel.",
     "keywords": ["laravel", "exchange", "ews"],
-    "homepage": "https://github.com/adeboyed/laravel-ews-driver",
+    "homepage": "https://github.com/bonoweb/laravel-ews-driver",
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "David Adeboye",
             "email": "david.adeboye@outlook.com"
+        },
+        {
+            "name": "Francesco Buonocore",
+            "email": "francesco.buonocore@brainfarm.eu"
         }
     ],
     "prefer-stable": true,
