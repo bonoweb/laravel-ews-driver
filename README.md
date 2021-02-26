@@ -22,21 +22,23 @@ For more information, visit that [repo](https://github.com/jamesiarmes/php-ews/)
 
 Add the package to your composer.json and run composer update.
 ```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/bonoweb/laravel-ews-driver.git"
+    }
+],
 "require": {
-    "adeboyed/laravel-ews-driver": "~1.1"
+    "bonoweb/laravel-ews-driver": "dev-master"
 },
 ```
 
-or install with composer
-```
-$ composer require adeboyed/laravel-ews-driver
-```
 
 Add the Exchange service provider in config/app.php:
 (Laravel 5.5+ uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.)
 ```php
 'providers' => [
-    Adeboyed\LaravelExchangeDriver\ExchangeAddedServiceProvider::class
+    Bonoweb\LaravelExchangeDriver\ExchangeAddedServiceProvider::class
 ];
 ```
 
@@ -58,7 +60,7 @@ Add the exchange service provider in bootstrap/app.php
 ```php
 $app->configure('mail');
 $app->configure('services');
-$app->register(Adeboyed\LaravelExchangeDriver\ExchangeServiceProvider::class);
+$app->register(Bonoweb\LaravelExchangeDriver\ExchangeServiceProvider::class);
 
 unset($app->availableBindings['mailer']);
 ```
@@ -81,6 +83,9 @@ MAIL_HOST=webmail.example.com
 MAIL_USERNAME=examplemail
 MAIL_PASSWORD=examplepassword
 MAIL_MESSAGE_DISPOSITION_TYPE=SaveOnly|SendAndSaveCopy|SendOnly
+MAIL_CA_FILE="/path/to/cacert.pem"
+MAIL_CLIENT_VERSION="Exchange2010"
+
 ```
 
 config/mail.php (In using lumen, this requires creating config directory and file, [see more here](https://lumen.laravel.com/docs/5.7/mail))
@@ -92,6 +97,8 @@ config/mail.php (In using lumen, this requires creating config directory and fil
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'messageDispositionType' => env('MAIL_MESSAGE_DISPOSITION_TYPE') // Optional, default: SendAndSaveCopy
+            'clientVersion' => env('MAIL_CLIENT_VERSION'), //Optional
+            'caFile' => env('MAIL_CA_FILE'), // Optional, if you want to set a specific SSL CA 
         ],
     ],
 ```
