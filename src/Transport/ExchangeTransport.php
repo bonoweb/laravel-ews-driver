@@ -75,6 +75,7 @@ class ExchangeTransport extends Transport
         $ewsMessage->From = new SingleRecipientType();
         $ewsMessage->From->Mailbox = new EmailAddressType();
         $ewsMessage->From->Mailbox->EmailAddress = config('mail.from.address');
+        $ewsMessage->From->Mailbox->Name = config('mail.from.name');
 
         // Set the recipient.
         foreach ($this->allContacts($simpleMessage) as $email => $name) {
