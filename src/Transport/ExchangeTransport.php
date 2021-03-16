@@ -18,6 +18,8 @@ use \jamesiarmes\PhpEws\Type\BodyType;
 use \jamesiarmes\PhpEws\Type\EmailAddressType;
 use \jamesiarmes\PhpEws\Type\MessageType;
 use \jamesiarmes\PhpEws\Type\SingleRecipientType;
+use \jamesiarmes\PhpEws\Type\FileAttachmentType;
+
 
 
 class ExchangeTransport extends Transport
@@ -42,7 +44,6 @@ class ExchangeTransport extends Transport
 
     public function send(Swift_Mime_SimpleMessage $simpleMessage, &$failedRecipients = null)
     {
-
         $this->beforeSendPerformed($simpleMessage);
 
         $client = new Client(
@@ -92,18 +93,30 @@ class ExchangeTransport extends Transport
         $ewsMessage->Body->BodyType = BodyTypeType::HTML;
         $ewsMessage->Body->_ = $simpleMessage->getBody();
 
+
+        // Add Attachments
+        foreach ($simpleMessage->getChildren() as $child) {
+            // Create attachment(s)
+            $att = new FileAttachmentType();
+            $att->Content = $child->getBody();
+            $att->Name = $child->getFilename();
+            $att->ContentType = $child->getContentType();
+            $ewsMessage->Attachments->FileAttachment[] = $att;
+        }
+
         $request->Items->Message[] = $ewsMessage;
+
         $response = $client->CreateItem($request);
 
         // Iterate over the results, printing any error messages or ewsMessage ids.
         $response_messages = $response->ResponseMessages->CreateItemResponseMessage;
+
         foreach ($response_messages as $response_message) {
             // Make sure the request succeeded.
             if ($response_message->ResponseClass != ResponseClassType::SUCCESS) {
                 $code = $response_message->ResponseCode;
-                $ewsMessage
-                    = $response_message->MessageText;
-                fwrite(STDERR, "Message failed to create with \"$code: $ewsMessage\"\n");
+                $ewsMessage = $response_message->MessageText;
+                throw new \Exception("Message failed to create with \"$code: $ewsMessage\"\n");
                 continue;
             }
         }
@@ -129,3 +142,4 @@ class ExchangeTransport extends Transport
         );
     }
 }
+
