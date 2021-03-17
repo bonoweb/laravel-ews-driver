@@ -104,3 +104,7 @@ config/mail.php (In using lumen, this requires creating config directory and fil
 ```
 
 For more information on the Message Disposition Type, [view more here](https://github.com/jamesiarmes/php-ews/blob/master/src/Enumeration/MessageDispositionType.php)
+
+
+##Attachments
+If you have problems sending attachments, try setting in the .env `MAIL_CLIENT_VERSION="Exchange2010_SP2"` [See Here](https://github.com/jamesiarmes/php-ews/issues/567)
