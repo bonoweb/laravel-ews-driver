@@ -10,7 +10,7 @@ use \jamesiarmes\PhpEws\Request\CreateItemType;
 
 use \jamesiarmes\PhpEws\ArrayType\ArrayOfRecipientsType;
 use \jamesiarmes\PhpEws\ArrayType\NonEmptyArrayOfAllItemsType;
-
+use \jamesiarmes\PhpEws\ArrayType\NonEmptyArrayOfAttachmentsType;
 use \jamesiarmes\PhpEws\Enumeration\BodyTypeType;
 use \jamesiarmes\PhpEws\Enumeration\ResponseClassType;
 
@@ -99,15 +99,17 @@ class ExchangeTransport extends Transport
         $ewsMessage->Body->BodyType = BodyTypeType::HTML;
         $ewsMessage->Body->_ = $simpleMessage->getBody();
 
-
         // Add Attachments
-        foreach ($simpleMessage->getChildren() as $child) {
-            // Create attachment(s)
-            $att = new FileAttachmentType();
-            $att->Content = $child->getBody();
-            $att->Name = $child->getFilename();
-            $att->ContentType = $child->getContentType();
-            $ewsMessage->Attachments->FileAttachment[] = $att;
+        if(count($simpleMessage->getChildren()) > 0){
+            $ewsMessage->Attachments = new NonEmptyArrayOfAttachmentsType();
+            foreach ($simpleMessage->getChildren() as $child) {
+                // Create attachment(s)
+                $att = new FileAttachmentType();
+                $att->Content = $child->getBody();
+                $att->Name = $child->getFilename();
+                $att->ContentType = $child->getContentType();
+                $ewsMessage->Attachments->FileAttachment[] = $att;
+            }
         }
 
         $request->Items->Message[] = $ewsMessage;
