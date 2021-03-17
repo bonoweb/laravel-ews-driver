@@ -27,8 +27,10 @@ class ExchangeAddedServiceProvider extends ServiceProvider
                 $messageDispositionType = $config['messageDispositionType'] ?: MessageDispositionType::SEND_AND_SAVE_COPY;
                 $clientVersion = $config['clientVersion'];
                 $caFile = $config['caFile'];
+                $fromName = $this->app['config']->get('mail.from.name');
+                $fromEmailAddress = $this->app['config']->get('mail.from.address');
 
-                return new ExchangeTransport($host, $username, $password, $messageDispositionType, $clientVersion, $caFile );
+                return new ExchangeTransport($host, $username, $password, $messageDispositionType, $clientVersion, $caFile, $fromName, $fromEmailAddress );
             });
         });
     }

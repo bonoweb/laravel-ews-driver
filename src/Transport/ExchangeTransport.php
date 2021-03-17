@@ -31,8 +31,10 @@ class ExchangeTransport extends Transport
     protected $messageDispositionType;
     protected $clientVersion;
     protected $caFile;
+    protected $fromName;
+    protected $fromEmailAddress;
 
-    public function __construct($host, $username, $password, $messageDispositionType, $clientVersion = null, $caFile=null)
+    public function __construct($host, $username, $password, $messageDispositionType, $clientVersion = null, $caFile=null, $fromName=null, $fromEmailAddress = null)
     {
         $this->host = $host;
         $this->username = $username;
@@ -40,6 +42,8 @@ class ExchangeTransport extends Transport
         $this->messageDispositionType = $messageDispositionType;
         $this->clientVersion = $clientVersion;
         $this->caFile = $caFile;
+        $this->fromName = $fromName;
+        $this->fromEmailAddress = $fromEmailAddress;
     }
 
     public function send(Swift_Mime_SimpleMessage $simpleMessage, &$failedRecipients = null)
@@ -75,8 +79,10 @@ class ExchangeTransport extends Transport
         // Set the sender.
         $ewsMessage->From = new SingleRecipientType();
         $ewsMessage->From->Mailbox = new EmailAddressType();
-        $ewsMessage->From->Mailbox->EmailAddress = config('mail.from.address');
-        $ewsMessage->From->Mailbox->Name = config('mail.from.name');
+        if($this->fromEmailAddress)
+            $ewsMessage->From->Mailbox->EmailAddress = $this->fromEmailAddress ;
+        if($this->fromName)
+            $ewsMessage->From->Mailbox->Name = $this->fromName ;
 
         // Set the recipient.
         foreach ($this->allContacts($simpleMessage) as $email => $name) {
