@@ -9,6 +9,7 @@ use \jamesiarmes\PhpEws\Client;
 use \jamesiarmes\PhpEws\Request\CreateItemType;
 
 use \jamesiarmes\PhpEws\ArrayType\ArrayOfRecipientsType;
+use \jamesiarmes\PhpEws\ArrayType\ArrayOfEmailAddressesType;
 use \jamesiarmes\PhpEws\ArrayType\NonEmptyArrayOfAllItemsType;
 use \jamesiarmes\PhpEws\ArrayType\NonEmptyArrayOfAttachmentsType;
 use \jamesiarmes\PhpEws\Enumeration\BodyTypeType;
@@ -83,6 +84,18 @@ class ExchangeTransport extends Transport
             $ewsMessage->From->Mailbox->EmailAddress = $this->fromEmailAddress ;
         if($this->fromName)
             $ewsMessage->From->Mailbox->Name = $this->fromName ;
+
+        //Set Reply To
+        $replyTo = $simpleMessage->getReplyTo();
+        if($replyTo){
+            $replyToEmail = new EmailAddressType();
+            $replyToEmail->EmailAddress = $replyTo;
+
+            $ewsMessage->ReplyTo = new ArrayOfEmailAddressesType();
+            $ewsMessage->ReplyTo->Mailbox[] = $replyToEmail;
+        }
+
+
 
         // Set the recipient.
         foreach ($this->allContacts($simpleMessage) as $email => $name) {
