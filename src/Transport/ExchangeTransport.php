@@ -88,13 +88,14 @@ class ExchangeTransport extends Transport
         //Set Reply To
         $replyTo = $simpleMessage->getReplyTo();
         if($replyTo){
-            $replyToEmail = new EmailAddressType();
-            $replyToEmail->EmailAddress = $replyTo;
-
             $ewsMessage->ReplyTo = new ArrayOfEmailAddressesType();
-            $ewsMessage->ReplyTo->Mailbox[] = $replyToEmail;
+            foreach($replyTo as $email => $name){
+                $recipient = new EmailAddressType();
+                $recipient->EmailAddress = $email;
+                $recipient->Name = $name;
+                $ewsMessage->ReplyTo->Mailbox[] = $recipient;
+            }
         }
-
 
 
         // Set the recipient.
