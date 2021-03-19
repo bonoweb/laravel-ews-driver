@@ -1,8 +1,10 @@
 Laravel Exchange Web Services Driver
 ====
 
-![Packagist Version](https://img.shields.io/packagist/v/adeboyed/laravel-ews-driver)
-![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/adeboyed/laravel-ews-driver)
+Forked From (https://github.com/adeboyed/laravel-ews-driver)
+
+![Packagist Version](https://img.shields.io/packagist/v/bonoweb/laravel-ews-driver)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/bonoweb/laravel-ews-driver)
 
 
 A Mail Driver with support for Exchange Web Services, using the original Laravel API. This library extends the original Laravel classes, so it uses exactly the same methods.
@@ -22,14 +24,8 @@ For more information, visit that [repo](https://github.com/jamesiarmes/php-ews/)
 
 Add the package to your composer.json and run composer update.
 ```json
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/bonoweb/laravel-ews-driver.git"
-    }
-],
 "require": {
-    "bonoweb/laravel-ews-driver": "dev-master"
+    "bonoweb/laravel-ews-driver": "~2"
 },
 ```
 
@@ -47,13 +43,13 @@ Add the Exchange service provider in config/app.php:
 Add the package to your composer.json and run composer update.
 ```json
 "require": {
-    "adeboyed/laravel-ews-driver": "~1.1"
+    "bonoweb/laravel-ews-driver": "~2"
 },
 ```
 
 or install with composer
 ```bash
-$ composer require adeboyed/laravel-ews-driver
+$ composer require bonoweb/laravel-ews-driver
 ```
 
 Add the exchange service provider in bootstrap/app.php
@@ -107,4 +103,6 @@ For more information on the Message Disposition Type, [view more here](https://g
 
 
 ##Attachments
+
 If you have problems sending attachments, try setting in the .env `MAIL_CLIENT_VERSION="Exchange2010_SP2"` [See Here](https://github.com/jamesiarmes/php-ews/issues/567)
+
